@@ -19,12 +19,8 @@ class ImageSearchViewHolder(
     }
 
     companion object {
-        fun create(
-            like: (Item) -> Unit,
-            parent: ViewGroup
-        ): ImageSearchViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.image_search_item, parent, false)
+        fun create(like: (Item) -> Unit, parent: ViewGroup): ImageSearchViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.image_search_item, parent, false)
             val binding = ImageSearchItemBinding.bind(view)
             return ImageSearchViewHolder(like, binding)
         }

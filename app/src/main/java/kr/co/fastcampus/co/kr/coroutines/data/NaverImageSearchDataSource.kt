@@ -22,7 +22,7 @@ class NaverImageSearchDataSource(
         val start = params.key ?: defaultStart
 
         return try {
-            // 시작
+            val response = imageSearchService.getImages(query, params.loadSize, start)
             TODO("이미지를 가져와야합니다.")
             // 끝
 

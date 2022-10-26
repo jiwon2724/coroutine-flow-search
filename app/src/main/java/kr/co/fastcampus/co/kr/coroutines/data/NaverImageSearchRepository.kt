@@ -20,8 +20,9 @@ class NaverImageSearchRepository {
 
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
-                TODO("헤더를 추가해야합니다.")
                 val request = chain.request().newBuilder()
+                    .addHeader("X-Naver-Client-Id", "mra2NKITHeBrpnQiuKiK")
+                    .addHeader("X-Naver-Client-Secret", "BbvvXelbNq")
                     .build()
                 chain.proceed(request)
             }
@@ -37,7 +38,7 @@ class NaverImageSearchRepository {
     }
 
     fun getImageSearch(query: String): Flow<PagingData<Item>> {
-        return Pager(
+        return Pager( // 페이저가 자동으로 플로우를 만들어줌
             config = PagingConfig(
                 pageSize = NaverImageSearchDataSource.defaultDisplay,
                 enablePlaceholders = false

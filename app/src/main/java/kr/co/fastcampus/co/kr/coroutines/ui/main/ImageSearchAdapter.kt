@@ -9,10 +9,7 @@ class ImageSearchAdapter(
     private val like: (Item) -> Unit
 ) : PagingDataAdapter<Item, ImageSearchViewHolder>(comparator) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ImageSearchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageSearchViewHolder {
         return ImageSearchViewHolder.create(like, parent)
     }
 

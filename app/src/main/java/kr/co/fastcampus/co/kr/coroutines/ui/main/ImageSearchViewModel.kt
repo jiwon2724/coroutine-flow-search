@@ -15,22 +15,26 @@ import kr.co.fastcampus.co.kr.coroutines.model.Item
 class ImageSearchViewModel : ViewModel() {
     private val repository = NaverImageSearchRepository()
     private val queryFlow = MutableSharedFlow<String>()
+    // 이미지 검색시 입력한 내용이 queryFlow를 통해 흐르고 있다.
     private val favorites = mutableSetOf<Item>()
     private val _favoritesFlow = MutableSharedFlow<List<Item>>()
 
-    val pagingDataFlow = queryFlow
-        .flatMapLatest {
+    // SharedFlow, -> Hot flow 언제나 값을 흘려보내는 구조 (collect 사용안해도), 여러명이 구독 가능
+
+    val pagingDataFlow = queryFlow // 입력한 내용을 통해서 이미지 검색을 한다.
+        .flatMapLatest { // 입력한 검색어가 다른 검색어를 입력하고 바뀌기 위해 flatMapLatest를 사용
             searchImages(it)
         }
-        .cachedIn(viewModelScope)
+        .cachedIn(viewModelScope) // viewModelScope에 저장한다.
 
     val favoritesFlow = _favoritesFlow.asSharedFlow()
 
     private fun searchImages(query: String): Flow<PagingData<Item>> =
         repository.getImageSearch(query)
 
+    // 사용자가 입력했던 검색어를 추가
     fun handleQuery(query: String) {
-        viewModelScope.launch {
+        viewModelScope.launch { // 뷰모델에서 코루틴을 사용할 땐 viewModelScope를 사용해서 만들어야한다.
             queryFlow.emit(query)
         }
     }
