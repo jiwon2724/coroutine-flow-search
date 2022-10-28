@@ -22,16 +22,21 @@ class ImageSearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         imageSearchViewModel = ViewModelProvider(this)[ImageSearchViewModel::class.java]
-
-        lifecycleScope.launch {
-            TODO("collectLatest를 이용해서 어댑터를 갱신해야합니다.")
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        // lifecycleScope // 프래그먼트 라이프사이클
+        // viewLifecycleOwner.lifecycleScope // 뷰의 라이프사이클 스코프
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            imageSearchViewModel.pagingDataFlow.collectLatest {
+                adapter.submitData(it)
+            }
+        }
 
         val binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root

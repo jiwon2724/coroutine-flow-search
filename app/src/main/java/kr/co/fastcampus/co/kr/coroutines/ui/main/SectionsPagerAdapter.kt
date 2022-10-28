@@ -7,8 +7,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class SectionsPagerAdapter(private val fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
+//    val imageSearchFragment = ImageSearchFragment()
+//
+//    override fun createFragment(position: Int): Fragment {
+//        return imageSearchFragment
+//    }
+
+//    -- > 이런식으로 코딩하면 안된다. createFragment()는 상황에 따라서 필요한걸 만들고 캐싱을한다.
+//         항상 만들어져 있어서 안됨.
+
+
+
     override fun createFragment(position: Int): Fragment {
-        TODO("프래그먼트를 생성해야합니다.")
+        return ImageSearchFragment()
     }
 
     override fun getItemCount(): Int {
