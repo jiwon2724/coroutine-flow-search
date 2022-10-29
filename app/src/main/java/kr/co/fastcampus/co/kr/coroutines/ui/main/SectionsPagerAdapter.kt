@@ -18,9 +18,11 @@ class SectionsPagerAdapter(private val fragmentActivity: FragmentActivity) :
 
 
 
-    override fun createFragment(position: Int): Fragment {
-        return ImageSearchFragment()
-    }
+    override fun createFragment(position: Int): Fragment =
+        when(position){
+            0 -> ImageSearchFragment()
+            else -> FavoritesFragment()
+        }
 
     override fun getItemCount(): Int {
         return 2

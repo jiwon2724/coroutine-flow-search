@@ -17,7 +17,7 @@ class ImageSearchViewModel : ViewModel() {
     private val queryFlow = MutableSharedFlow<String>()
     // 이미지 검색시 입력한 내용이 queryFlow를 통해 흐르고 있다.
     private val favorites = mutableSetOf<Item>()
-    private val _favoritesFlow = MutableSharedFlow<List<Item>>()
+    private val _favoritesFlow = MutableSharedFlow<List<Item>>(replay = 1)
 
     // SharedFlow, -> Hot flow 언제나 값을 흘려보내는 구조 (collect 사용안해도), 여러명이 구독 가능
 
@@ -28,6 +28,7 @@ class ImageSearchViewModel : ViewModel() {
         .cachedIn(viewModelScope) // viewModelScope에 저장한다.
 
     val favoritesFlow = _favoritesFlow.asSharedFlow()
+    // 값을 바꿀 수 없는 flow로 캐스팅
 
     private fun searchImages(query: String): Flow<PagingData<Item>> =
         repository.getImageSearch(query)
